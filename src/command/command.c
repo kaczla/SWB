@@ -2,7 +2,7 @@
 
 char* command(int argc, char **argv)
 {
-
+  int c;
   while ((c = getopt (argc, argv, "p:")) != -1) {
     switch (c) {
       case 'p':
@@ -17,11 +17,11 @@ char* command(int argc, char **argv)
           fprintf (stderr,
                    "Unknown option character `\\x%x'.\n",
                    optopt);
-        return 1;
+        return ".";
+        break;
       default:
-       return "";
+       return ".";
       }
   }
-
-
- }
+  return ".";
+}
