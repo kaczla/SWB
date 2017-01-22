@@ -29,14 +29,14 @@ build: $(OBJ_FILES) $(NAME_MAIN_FILE) | $(BINDIR) $(LIB_STATIC_NAME) $(LIB_DYNAM
 
 $(LIB_STATIC_NAME): lib_static | $(LIBDIR)
 
-lib_static:
+lib_static: | $(LIBDIR)
 	@echo ""
 	@$(MAKE) -C $(SRCDIR)command
 	@echo ""
 
 $(LIB_DYNAMIC_NAME): lib_dynamic | $(LIBDIR)
 
-lib_dynamic:
+lib_dynamic: | $(LIBDIR)
 	@$(MAKE) -C $(SRCDIR)terminal
 	@echo ""
 
