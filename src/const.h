@@ -1,6 +1,8 @@
 #ifndef CONST_H
 #define CONST_H
 
+#include <linux/limits.h>
+
 #define MAX_LENGTH 255
 #define MAX_SIZE 255
 

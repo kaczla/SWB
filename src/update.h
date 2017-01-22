@@ -10,7 +10,7 @@
 #include "files.h"
 
 
-char* path;
+char path[PATH_MAX];
 unsigned short terminal_row;
 unsigned short terminal_col;
 char refresh;

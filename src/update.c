@@ -2,11 +2,12 @@
 
 void init(int argc, char **argv)
 {
-  path = command(argc, argv);
+  strcpy(path, command(argc, argv));
   if( path[0] == '\0' )
   {
-  	path = ".";
+  	strcpy(path, ".");
   }
+  convert_path_to_realpath(path);
   struct winsize terminal;
   terminal = get_terminal_size();
   terminal_row = terminal.ws_row;

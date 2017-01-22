@@ -3,9 +3,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "const.h"
 
-extern char* path;
+extern char path[PATH_MAX];
 extern unsigned short terminal_row;
 extern unsigned short terminal_col;
 extern char files_list[MAX_SIZE][MAX_LENGTH];

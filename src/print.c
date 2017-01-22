@@ -86,9 +86,24 @@ static inline void print_top()
   else
   {
     printf(BOX_DRAWINGS_DOWN_AND_RIGHT);
-    for (j = 0; j < terminal_col - 2; ++j)
+    int path_length = strlen(path);
+    if (path_length > terminal_col - 2)
     {
-      printf(BOX_DRAWINGS_HORIZONTAL);
+      for (j = 0; j < terminal_col - 2; ++j)
+      {
+        printf(BOX_DRAWINGS_HORIZONTAL);
+      }
+    }
+    else
+    {
+      for (j = 0; j < path_length; ++j)
+      {
+        printf("%c", path[j]);
+      }
+      for (; j < terminal_col - 2; ++j)
+      {
+        printf(BOX_DRAWINGS_HORIZONTAL);
+      }
     }
     printf(BOX_DRAWINGS_DOWN_AND_LEFT);
     printf(NEW_LINE);
