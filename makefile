@@ -14,8 +14,10 @@ OBJ_FILES=$(addprefix $(OBJDIR), $(addsuffix .o, $(NAME_FILES)))
 LIB_STATIC_NAME=$(LIBDIR)libcommand.a
 LIB_DYNAMIC_NAME=$(LIBDIR)libterminal.so
 MAIN_NAME=main.app
+SUPPORT_UNICODE=0
+SUPPORT_UNICODE_SHELL=$(shell echo $(LANG) | grep -i 'UTF-8\|UTF-16\|UTF-32')
 
-all: build install
+all: prebuild build install
 
 install: $(OUTDIR)$(MAIN_NAME)
 
@@ -23,6 +25,13 @@ $(OUTDIR)$(MAIN_NAME): $(BINDIR)$(MAIN_NAME) | $(OUTDIR)
 	@echo ""
 	cp $^ $@
 	@chmod u+x $@
+
+prebuild:
+ifeq ($(SUPPORT_UNICODE_SHELL),)
+SUPPORT_UNICODE=0
+else
+SUPPORT_UNICODE=1
+endif
 
 build: $(OBJ_FILES) $(NAME_MAIN_FILE) | $(BINDIR) $(LIB_STATIC_NAME) $(LIB_DYNAMIC_NAME)
 	$(CC) $(LD_PATH) $(CFLAGS_OUT) $^ -o $(BINDIR)$(MAIN_NAME) $(LDFLAGS)
@@ -41,7 +50,11 @@ lib_dynamic: | $(LIBDIR)
 	@echo ""
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(SRCDIR)%.h | $(OBJDIR)
+ifeq ($(SUPPORT_UNICODE), 1)
+	$(CC) $(CFLAGS) -D SUPPORT_UNICODE $< -o $@
+else
 	$(CC) $(CFLAGS) $< -o $@
+endif
 
 $(LIBDIR):
 	@mkdir -p $(LIBDIR)
