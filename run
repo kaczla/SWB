@@ -1,0 +1,16 @@
+#!/bin/bash
+
+export LD_LIBRARY_PATH=./lib:$LD_LIBRARY_PATH
+
+file="./out/main.app"
+
+if [ -f "$file" ]; then
+  $file "$@"
+else
+  make
+  if [ $? -eq 0 ]; then
+    $file "$@"
+  else
+    echo "Try build main.app using command: make"
+  fi
+fi
