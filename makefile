@@ -17,7 +17,13 @@ MAIN_NAME=main.app
 SUPPORT_UNICODE=0
 SUPPORT_UNICODE_SHELL=$(shell echo $(LANG) | grep -i 'UTF-8\|UTF-16\|UTF-32')
 
+ifeq ($(MAKECMDGOALS),arm)
+-include makefile.mk
+endif
+
 all: prebuild build install
+
+arm: all
 
 install: $(OUTDIR)$(MAIN_NAME)
 
@@ -40,13 +46,21 @@ $(LIB_STATIC_NAME): lib_static | $(LIBDIR)
 
 lib_static: | $(LIBDIR)
 	@echo ""
+ifeq ($(MAKECMDGOALS),arm)
+	@$(MAKE) arm -C $(SRCDIR)command
+else
 	@$(MAKE) -C $(SRCDIR)command
+endif
 	@echo ""
 
 $(LIB_DYNAMIC_NAME): lib_dynamic | $(LIBDIR)
 
 lib_dynamic: | $(LIBDIR)
+ifeq ($(MAKECMDGOALS),arm)
+	@$(MAKE) arm -C $(SRCDIR)terminal
+else
 	@$(MAKE) -C $(SRCDIR)terminal
+endif
 	@echo ""
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(SRCDIR)%.h | $(OBJDIR)

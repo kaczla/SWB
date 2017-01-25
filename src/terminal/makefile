@@ -7,7 +7,13 @@ OBJ_FILES=$(addprefix $(OBJDIR), $(addsuffix .o, $(NAME_FILES)))
 LIB_NAME=$(LIBDIR)libterminal.so
 LIB_DESTINATION=../../lib/libterminal.so
 
+ifeq ($(MAKECMDGOALS),arm)
+-include ../../makefile.mk
+endif
+
 all: build install
+
+arm: all
 
 build: $(OBJ_FILES) $(LIB_NAME)
 
@@ -29,4 +35,3 @@ $(OBJDIR):
 .PHONY:clean
 clean:
 	rm -f $(OBJDIR)*.o $(LIBDIR)*
-	
